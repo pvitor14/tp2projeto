@@ -1,149 +1,113 @@
 import React, { useState, useEffect } from "react";
-import FormularioPsicologo from "./componentes/FormularioPsicologo";
-import PerfilPsicologo from "./componentes/PerfilPsicologo";
-import AgendamentoConsulta from "./componentes/AgendamentoConsulta";
+import { Routes, Route } from "react-router-dom";
+
+import PaginaInicial from "./PaginaInicial";
+import PaginaPerfil from "./PaginaPerfil";
+
 import "./styles.css";
 
+const MOCK_BIOS = [
+  "Especialista em Terapia Cognitivo-Comportamental (TCC) com 5 anos de experiência, focada em transtornos de ansiedade e depressão em adultos.",
+  "Psicóloga clínica com abordagem humanista, auxiliando pacientes no processo de autoconhecimento e desenvolvimento pessoal.",
+  "Terapeuta de casais e famílias, utilizando métodos sistêmicos para melhorar a comunicação e resolver conflitos relacionais.",
+  "Especializada no atendimento de crianças e adolescentes, com foco em dificuldades de aprendizagem e comportamento.",
+  "Ampla experiência em tratamento de fobias e síndrome do pânico, utilizando técnicas de exposição e dessensibilização.",
+  "Foco em saúde mental no trabalho, auxiliando profissionais com gestão de estresse e prevenção de síndrome de burnout.",
+];
+
+const MOCK_ESPECIALIDADES = [
+  ["TCC", "Ansiedade", "Depressão"],
+  ["Humanista", "Autoconhecimento", "Jovens"],
+  ["Terapia de Casal", "Sistêmica", "Família"],
+  ["Infantil", "Adolescentes", "Aprendizagem"],
+  ["Fobias", "Pânico", "TCC"],
+  ["Estresse", "Burnout", "Carreira"],
+];
+
+const MOCK_HORARIOS = [
+  ["09:00", "10:00", "11:00", "14:00"],
+  ["08:00", "09:00", "13:00", "15:00"],
+  ["10:00", "11:00", "15:00", "16:00"],
+  ["14:00", "15:00", "16:00", "17:00"],
+  ["09:00", "11:00", "14:00", "16:00"],
+  ["08:00", "10:00", "13:00", "17:00"],
+];
+
 const App = () => {
-  const [psicologos, setPsicologos] = useState(() => {
-    const psicologosSalvos = localStorage.getItem("psicologos");
-    return psicologosSalvos ? JSON.parse(psicologosSalvos) : [];
-  });
-
-  const [psicologoSelecionado, setPsicologoSelecionado] = useState(null);
-
+  const [psicologos, setPsicologos] = useState([]);
   const [consultas, setConsultas] = useState(() => {
     const consultasSalvas = localStorage.getItem("consultas");
     return consultasSalvas ? JSON.parse(consultasSalvas) : {};
   });
-
-  const [mostrarAgendamento, setMostrarAgendamento] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    localStorage.setItem("psicologos", JSON.stringify(psicologos));
-  }, [psicologos]);
+    const buscarPsicologos = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          "https://randomuser.me/api/?results=6&seed=mindcare"
+        );
+        const data = await response.json();
+
+        const psicologosMapeados = data.results.map((user, index) => ({
+          id: user.login.uuid,
+          nomeCompleto: `${user.name.first} ${user.name.last}`,
+          foto: user.picture.large,
+          endereco: `${user.location.street.number} ${user.location.street.name}, ${user.location.city}`,
+          crp: `06/${Math.floor(Math.random() * 90000) + 10000}`,
+
+          especialidades:
+            MOCK_ESPECIALIDADES[index % MOCK_ESPECIALIDADES.length],
+          biografia: MOCK_BIOS[index % MOCK_BIOS.length],
+          horarios: MOCK_HORARIOS[index % MOCK_HORARIOS.length],
+        }));
+
+        setPsicologos(psicologosMapeados);
+      } catch (error) {
+        console.error("Erro ao buscar dados da API:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    buscarPsicologos();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("consultas", JSON.stringify(consultas));
   }, [consultas]);
 
-  const aoCadastrarPsicologo = (dados) => {
-    const novoPsicologo = {
-      id: Date.now(),
-      ...dados,
-    };
-    setPsicologos([...psicologos, novoPsicologo]);
-    setPsicologoSelecionado(novoPsicologo);
-    setMostrarAgendamento(false);
-  };
-
-  const aoAgendarConsulta = (nomeCliente, horarioConsulta) => {
-    if (!psicologoSelecionado.horarios.includes(horarioConsulta)) {
-      alert("Horário indisponível.");
-      return;
-    }
-    const id = psicologoSelecionado.id;
-    const consultasDoPsicologo = consultas[id] || [];
+  const aoAgendarConsulta = (idPsicologo, nomeCliente, horarioConsulta) => {
+    const consultasDoPsicologo = consultas[idPsicologo] || [];
     const novaConsulta = { nomeCliente, horarioConsulta };
 
     setConsultas({
       ...consultas,
-      [id]: [...consultasDoPsicologo, novaConsulta],
+      [idPsicologo]: [...consultasDoPsicologo, novaConsulta],
     });
-  };
-
-  const abrirAgendamento = () => {
-    setMostrarAgendamento(true);
-  };
-
-  const voltarParaPerfil = () => {
-    setMostrarAgendamento(false);
-  };
-
-  const selecionarPsicologo = (id) => {
-    const psic = psicologos.find((p) => p.id === id);
-    setPsicologoSelecionado(psic);
-    setMostrarAgendamento(false);
-  };
-
-  const removerPsicologo = (id) => {
-    const listaFiltrada = psicologos.filter((p) => p.id !== id);
-    setPsicologos(listaFiltrada);
-    if (psicologoSelecionado?.id === id) {
-      setPsicologoSelecionado(null);
-      setMostrarAgendamento(false);
-    }
   };
 
   return (
     <div className="app-container">
       <h1 className="titulo-principal">MindCare</h1>
 
-      {!psicologoSelecionado && (
-        <>
-          <FormularioPsicologo aoCadastrarPsicologo={aoCadastrarPsicologo} />
-
-          <h2>Psicólogos cadastrados</h2>
-          {psicologos.length === 0 && <p>Nenhum psicólogo cadastrado.</p>}
-          <ul className="lista-psicologos">
-            {psicologos.map((psic) => (
-              <li key={psic.id} className="item-psicologo">
-                <strong>{psic.nomeCompleto}</strong>
-                <div>
-                  <button onClick={() => selecionarPsicologo(psic.id)}>
-                    Ver Perfil
-                  </button>
-                  <button onClick={() => removerPsicologo(psic.id)}>
-                    Remover
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-
-      {psicologoSelecionado && !mostrarAgendamento && (
-        <>
-          <PerfilPsicologo
-            psicologo={psicologoSelecionado}
-            aoClicarAgendar={abrirAgendamento}
-          />
-          <button
-            className="botao-voltar"
-            onClick={() => {
-              setPsicologoSelecionado(null);
-              setMostrarAgendamento(false);
-            }}
-          >
-            Voltar à lista de psicólogos
-          </button>
-        </>
-      )}
-
-      {psicologoSelecionado && mostrarAgendamento && (
-        <>
-          <button className="botao-voltar" onClick={voltarParaPerfil}>
-            ← Voltar para Perfil
-          </button>
-
-          <AgendamentoConsulta
-            psicologo={psicologoSelecionado}
-            aoAgendarConsulta={aoAgendarConsulta}
-          />
-
-          <div className="consultas-agendadas">
-            <h3>Consultas Agendadas:</h3>
-            <ul>
-              {(consultas[psicologoSelecionado.id] || []).map((consulta, i) => (
-                <li key={i}>
-                  {consulta.nomeCliente} - {consulta.horarioConsulta}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
-      )}
+      <Routes>
+        <Route
+          path="/"
+          element={<PaginaInicial psicologos={psicologos} loading={loading} />}
+        />
+        <Route
+          path="/perfil/:id"
+          element={
+            <PaginaPerfil
+              psicologos={psicologos}
+              consultas={consultas}
+              aoAgendarConsulta={aoAgendarConsulta}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 };
