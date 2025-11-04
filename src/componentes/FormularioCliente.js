@@ -14,9 +14,9 @@ const FormularioCliente = ({ psicologo, aoAgendarConsulta }) => {
   return (
     <div>
       <h2>Agendamento de Consulta</h2>
-      <p>Psicólogo: {psicologo?.nome}</p>
-      <p>Local: {psicologo?.localTrabalho}</p>
-      <p>Horários disponíveis: {psicologo?.horarios}</p>
+      <p>Psicólogo: {psicologo?.nomeCompleto}</p>
+      <p>Local: {psicologo?.endereco}</p>
+      <p>Horários disponíveis: {(psicologo?.horarios || []).join(", ")}</p>{" "}
       <form onSubmit={aoSubmeter}>
         <input
           type="text"
