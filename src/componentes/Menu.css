@@ -1,0 +1,27 @@
+.menu-navegacao {
+  background-color: #2b7cff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.menu-navegacao ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.menu-navegacao li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: opacity 0.3s;
+}
+
+.menu-navegacao li a:hover {
+  opacity: 0.8;
+}
