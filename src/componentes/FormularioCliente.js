@@ -4,10 +4,15 @@ const FormularioCliente = ({ psicologo, aoAgendarConsulta }) => {
   const [nomeCliente, setNomeCliente] = useState("");
   const [horarioConsulta, setHorarioConsulta] = useState("");
 
+  const horariosDisponiveis = psicologo?.horarios || [];
+
   const aoSubmeter = (e) => {
     e.preventDefault();
-    if (horarioConsulta) {
+
+    if (nomeCliente && horarioConsulta) {
       aoAgendarConsulta(nomeCliente, horarioConsulta);
+    } else {
+      alert("Por favor, preencha seu nome e selecione um horário.");
     }
   };
 
@@ -16,7 +21,7 @@ const FormularioCliente = ({ psicologo, aoAgendarConsulta }) => {
       <h2>Agendamento de Consulta</h2>
       <p>Psicólogo: {psicologo?.nomeCompleto}</p>
       <p>Local: {psicologo?.endereco}</p>
-      <p>Horários disponíveis: {(psicologo?.horarios || []).join(", ")}</p>{" "}
+
       <form onSubmit={aoSubmeter}>
         <input
           type="text"
@@ -25,13 +30,22 @@ const FormularioCliente = ({ psicologo, aoAgendarConsulta }) => {
           onChange={(e) => setNomeCliente(e.target.value)}
           required
         />
-        <input
-          type="text"
-          placeholder="Horário de consulta"
+
+        <select
           value={horarioConsulta}
           onChange={(e) => setHorarioConsulta(e.target.value)}
           required
-        />
+        >
+          <option value="" disabled>
+            Selecione um Horário
+          </option>
+          {horariosDisponiveis.map((horario, index) => (
+            <option key={index} value={horario}>
+              {horario}
+            </option>
+          ))}
+        </select>
+
         <button type="submit">Marcar Consulta</button>
       </form>
     </div>
