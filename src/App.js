@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import PaginaInicial from "./PaginaInicial";
 import PaginaPerfil from "./PaginaPerfil";
 import PaginaConsultas from "./PaginaConsultas";
+import CadastroPsicologo from "./CadastroPsicologo";
 import Navegacao from "./componentes/Navegacao";
 
 import "./styles.css";
@@ -37,8 +38,6 @@ const MOCK_HORARIOS = [
 
 const App = () => {
   const [psicologos, setPsicologos] = useState([]);
-
-  // Consultas gerais
   const [consultas, setConsultas] = useState(() => {
     const consultasSalvas = localStorage.getItem("consultas");
     return consultasSalvas ? JSON.parse(consultasSalvas) : {};
@@ -46,7 +45,7 @@ const App = () => {
 
   const [loading, setLoading] = useState(true);
 
-  // Buscar os dados dos psicólogos
+  // Buscar psicólogos de exemplo
   useEffect(() => {
     const buscarPsicologos = async () => {
       try {
@@ -79,12 +78,10 @@ const App = () => {
     buscarPsicologos();
   }, []);
 
-  // Salvar as consultas
   useEffect(() => {
     localStorage.setItem("consultas", JSON.stringify(consultas));
   }, [consultas]);
 
-  // Função de agendamento
   const aoAgendarConsulta = (idPsicologo, nomeCliente, horarioConsulta) => {
     const consultasDoPsicologo = consultas[idPsicologo] || [];
     const novaConsulta = { nomeCliente, horarioConsulta };
@@ -95,11 +92,13 @@ const App = () => {
     });
   };
 
+  const aoCadastrarPsicologo = (novoPsicologo) => {
+    setPsicologos([...psicologos, novoPsicologo]);
+  };
+
   return (
     <div className="app-container">
       <h1 className="titulo-principal">MindCare</h1>
-
-      {/* Menu de Navegação */}
       <Navegacao />
 
       <Routes>
@@ -107,7 +106,6 @@ const App = () => {
           path="/"
           element={<PaginaInicial psicologos={psicologos} loading={loading} />}
         />
-        {/* Visualização de consultas */}
         <Route
           path="/minhas-consultas"
           element={
@@ -122,6 +120,12 @@ const App = () => {
               consultas={consultas}
               aoAgendarConsulta={aoAgendarConsulta}
             />
+          }
+        />
+        <Route
+          path="/cadastro-psicologo"
+          element={
+            <CadastroPsicologo aoCadastrarPsicologo={aoCadastrarPsicologo} />
           }
         />
       </Routes>

@@ -70,4 +70,4 @@ const PaginaPerfil = ({ psicologos, consultas, aoAgendarConsulta }) => {
   );
 };
 
-export default PaginaPerfil;
+export default PaginaPerfil; 

@@ -56,6 +56,24 @@ const Navegacao = () => {
             Minhas Consultas
           </Link>
         </li>
+        <li style={{ color: "#6c757d", display: "flex", alignItems: "center" }}>
+          |
+        </li>
+        <li>
+          <Link
+            to="/cadastro-psicologo"
+            style={{
+              textDecoration: "none",
+              color: "#ffc107",
+              fontWeight: "bold",
+              padding: "8px 12px",
+              borderRadius: "5px",
+              transition: "background-color 0.3s",
+            }}
+          >
+            Cadastrar Psicólogo
+          </Link>
+        </li>
       </ul>
     </nav>
   );
