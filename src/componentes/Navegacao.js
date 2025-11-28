@@ -28,7 +28,7 @@ const Navegacao = () => {
             to="/"
             style={{
               textDecoration: "none",
-              color: "#007bff",
+              color: "#007bff", // Azul para "Lista de Psicólogos"
               fontWeight: "bold",
               padding: "8px 12px",
               borderRadius: "5px",
@@ -46,7 +46,7 @@ const Navegacao = () => {
             to="/minhas-consultas"
             style={{
               textDecoration: "none",
-              color: "#28a745",
+              color: "#28a745", // Verde para "Minhas Consultas"
               fontWeight: "bold",
               padding: "8px 12px",
               borderRadius: "5px",
@@ -64,7 +64,7 @@ const Navegacao = () => {
             to="/cadastro-psicologo"
             style={{
               textDecoration: "none",
-              color: "#ffc107",
+              color: "#ffc107", // Amarelo para "Cadastrar Psicólogo"
               fontWeight: "bold",
               padding: "8px 12px",
               borderRadius: "5px",
@@ -72,6 +72,24 @@ const Navegacao = () => {
             }}
           >
             Cadastrar Psicólogo
+          </Link>
+        </li>
+        <li style={{ color: "#6c757d", display: "flex", alignItems: "center" }}>
+          |
+        </li>
+        <li>
+          <Link
+            to="/cadastro-usuario"
+            style={{
+              textDecoration: "none",
+              color: "red", // Vermelho para "Cadastrar Usuário"
+              fontWeight: "bold",
+              padding: "8px 12px",
+              borderRadius: "5px",
+              transition: "background-color 0.3s",
+            }}
+          >
+            Cadastrar Usuário
           </Link>
         </li>
       </ul>

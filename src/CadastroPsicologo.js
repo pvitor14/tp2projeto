@@ -7,6 +7,8 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
   const [biografia, setBiografia] = useState("");
   const [endereco, setEndereco] = useState("");
   const [foto, setFoto] = useState(null);
+  const [usuario, setUsuario] = useState(""); // Novo campo para nome de usuário
+  const [senha, setSenha] = useState(""); // Novo campo para senha
 
   const handleFotoChange = (e) => {
     const file = e.target.files[0];
@@ -15,29 +17,6 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
       reader.onloadend = () => setFoto(reader.result);
       reader.readAsDataURL(file);
     }
-  };
-
-  const handleFotoFromCamera = () => {
-    const video = document.createElement("video");
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-
-    const constraints = {
-      video: { facingMode: "environment", width: 640, height: 480 },
-    };
-
-    navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then((stream) => {
-        video.srcObject = stream;
-        video.play();
-        setTimeout(() => {
-          context.drawImage(video, 0, 0, canvas.width, canvas.height);
-          setFoto(canvas.toDataURL("image/jpeg"));
-          stream.getTracks().forEach((track) => track.stop());
-        }, 1000);
-      })
-      .catch((err) => console.error("Erro ao acessar a câmera: ", err));
   };
 
   const handleSubmit = (e) => {
@@ -50,6 +29,8 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
       biografia,
       endereco,
       foto,
+      usuario, // Adicionando o usuário 28/11
+      senha, // Adicionando a senha 28/11
       horarios: [],
     });
     setNomeCompleto("");
@@ -58,6 +39,8 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
     setBiografia("");
     setEndereco("");
     setFoto(null);
+    setUsuario("");
+    setSenha("");
   };
 
   return (
@@ -113,16 +96,30 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
           />
         </div>
 
+        {/* Campos de Nome de Usuário e Senha */}
+        <div>
+          <label>Nome de Usuário:</label>
+          <input
+            type="text"
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Senha:</label>
+          <input
+            type="password"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            required
+          />
+        </div>
+
         <div>
           <label>Foto de Perfil:</label>
           <input type="file" accept="image/*" onChange={handleFotoChange} />
-          <button
-            type="button"
-            className="btn-camera"
-            onClick={handleFotoFromCamera}
-          >
-            Usar Câmera
-          </button>
           {foto && (
             <div className="foto-preview">
               <img src={foto} alt="Foto do Psicólogo" />

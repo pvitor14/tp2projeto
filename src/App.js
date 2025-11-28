@@ -5,6 +5,7 @@ import PaginaInicial from "./PaginaInicial";
 import PaginaPerfil from "./PaginaPerfil";
 import PaginaConsultas from "./PaginaConsultas";
 import CadastroPsicologo from "./CadastroPsicologo";
+import CadastroUsuario from "./CadastroUsuario";
 import Navegacao from "./componentes/Navegacao";
 
 import "./styles.css";
@@ -96,6 +97,10 @@ const App = () => {
     setPsicologos([...psicologos, novoPsicologo]);
   };
 
+  const aoCadastrarUsuario = (novoUsuario) => {
+    console.log("Novo usuário cadastrado:", novoUsuario);
+  };
+
   return (
     <div className="app-container">
       <h1 className="titulo-principal">MindCare</h1>
@@ -127,6 +132,11 @@ const App = () => {
           element={
             <CadastroPsicologo aoCadastrarPsicologo={aoCadastrarPsicologo} />
           }
+        />
+        {/* Adicionando a rota para cadastro do usuário */}
+        <Route
+          path="/cadastro-usuario"
+          element={<CadastroUsuario aoCadastrarUsuario={aoCadastrarUsuario} />}
         />
       </Routes>
     </div>
