@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import PaginaInicial from "./PaginaInicial";
 import PaginaPerfil from "./PaginaPerfil";
@@ -7,6 +7,7 @@ import PaginaConsultas from "./PaginaConsultas";
 import CadastroPsicologo from "./CadastroPsicologo";
 import CadastroUsuario from "./CadastroUsuario";
 import Navegacao from "./componentes/Navegacao";
+import Chat from "./componentes/Chat"; 
 
 import "./styles.css";
 
@@ -43,8 +44,8 @@ const App = () => {
     const consultasSalvas = localStorage.getItem("consultas");
     return consultasSalvas ? JSON.parse(consultasSalvas) : {};
   });
-
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate(); // Hook para navegação
 
   // Buscar psicólogos de exemplo
   useEffect(() => {
@@ -133,10 +134,14 @@ const App = () => {
             <CadastroPsicologo aoCadastrarPsicologo={aoCadastrarPsicologo} />
           }
         />
-        {/* Adicionando a rota para cadastro do usuário */}
         <Route
           path="/cadastro-usuario"
           element={<CadastroUsuario aoCadastrarUsuario={aoCadastrarUsuario} />}
+        />
+        {}
+        <Route
+          path="/chat"
+          element={<Chat />} 
         />
       </Routes>
     </div>

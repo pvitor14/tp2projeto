@@ -92,6 +92,24 @@ const Navegacao = () => {
             Cadastrar Usuário
           </Link>
         </li>
+        <li style={{ color: "#6c757d", display: "flex", alignItems: "center" }}>
+          |
+        </li>
+        <li>
+          <Link
+            to="/chat"
+            style={{
+              textDecoration: "none",
+              color: "#6f42c1", // Cor roxa para "Bate-papo"
+              fontWeight: "bold",
+              padding: "8px 12px",
+              borderRadius: "5px",
+              transition: "background-color 0.3s",
+            }}
+          >
+            Bate-papo
+          </Link>
+        </li>
       </ul>
     </nav>
   );
