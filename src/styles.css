@@ -167,3 +167,240 @@
   border-radius: 6px;
   margin-bottom: 0.5rem;
 }
+/* ================================
+   Cadastro Psicólogo - Página
+================================== */
+
+/* Container principal do formulário */
+.cadastro-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #fefefe;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(43, 124, 255, 0.15);
+  border: 1px solid #cddbf8;
+  font-family: inherit;
+}
+
+/* Título da página */
+.cadastro-container h2 {
+  text-align: center;
+  color: #2b7cff;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+/* Formulário interno */
+.cadastro-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Cada label e input/textarea */
+.cadastro-container label {
+  font-weight: 600;
+  color: #2b7cff;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+/* Inputs e textarea do formulário */
+.cadastro-container input[type="text"],
+.cadastro-container input[type="file"],
+.cadastro-container textarea {
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-family: inherit;
+  transition: border-color 0.3s;
+  resize: vertical;
+}
+
+.cadastro-container input[type="text"]:focus,
+.cadastro-container input[type="file"]:focus,
+.cadastro-container textarea:focus {
+  border-color: #2b7cff;
+  outline: none;
+}
+
+/* Textarea maior */
+.cadastro-container textarea {
+  min-height: 100px;
+}
+
+/* Botão de envio */
+.cadastro-container button[type="submit"] {
+  background-color: #2b7cff;
+  color: white;
+  padding: 0.85rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 0.6rem;
+}
+
+.cadastro-container button[type="submit"]:hover {
+  background-color: #1a4fcc;
+}
+
+/* Botão da câmera */
+.cadastro-container .btn-camera {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.5rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.cadastro-container .btn-camera:hover {
+  background-color: #357a38;
+}
+
+/* Preview da foto */
+.cadastro-container .foto-preview {
+  margin-top: 0.5rem;
+}
+
+.cadastro-container .foto-preview img {
+  max-width: 120px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Layout responsivo */
+@media (min-width: 600px) {
+  .cadastro-container form {
+    gap: 1.2rem;
+  }
+}
+/* ================================
+   Responsividade Mobile - iOS/Android - cadastrar psicologo
+================================== */
+
+/* Garante que os inputs e botões ocupem toda a largura em telas pequenas */
+@media (max-width: 599px) {
+  .cadastro-container form {
+    gap: 1rem;
+  }
+
+  .cadastro-container .btn-camera,
+  .cadastro-container button[type="submit"] {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.9rem;
+  }
+
+  .cadastro-container .foto-preview img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+  .cadastro-container form {
+    gap: 1.2rem;
+  }
+
+  .cadastro-container .btn-camera,
+  .cadastro-container button[type="submit"] {
+    width: auto;
+  }
+}
+
+/* Navegação responsiva - Navegação.js */
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* menor gap em mobile */
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  list-style: none;
+}
+
+nav ul li a {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px; /* maior área de toque para mobile */
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Mobile: centraliza e diminui gap */
+@media (max-width: 599px) {
+  nav ul {
+    gap: 10px;
+  }
+  nav ul li a {
+    padding: 12px 18px; /* botão mais touch-friendly */
+    font-size: 0.9rem;
+  }
+}
+/* ================================
+   PaginaConsultas - Responsivo Mobile
+=================================== */
+
+/* Container principal */
+div[style*="max-width: 800px"] {
+  padding: 20px;
+  max-width: 100%; /* Permite ocupar toda a largura em mobile */
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Lista */
+div[style*="max-width: 800px"] ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Cards de consulta */
+div[style*="max-width: 800px"] ul li {
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  width: 100%; /* garante que não ultrapasse a tela em mobile */
+}
+
+/* Botão “Agendar Sua Primeira Consulta” */
+div[style*="max-width: 800px"] .consulta-vazia button {
+  width: auto;
+}
+
+/* Mobile */
+@media (max-width: 599px) {
+  div[style*="max-width: 800px"] {
+    padding: 15px;
+  }
+
+  div[style*="max-width: 800px"] ul li {
+    padding: 12px;
+  }
+
+  div[style*="max-width: 800px"] .consulta-vazia button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+}

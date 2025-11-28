@@ -8,30 +8,22 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
   const [endereco, setEndereco] = useState("");
   const [foto, setFoto] = useState(null);
 
-  // Função para capturar a foto usando a câmera
   const handleFotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setFoto(reader.result); // A URL da imagem será armazenada no estado 'foto'
-      };
+      reader.onloadend = () => setFoto(reader.result);
       reader.readAsDataURL(file);
     }
   };
 
-  // Função para capturar a foto da câmera
-  const handleFotoFromCamera = (e) => {
+  const handleFotoFromCamera = () => {
     const video = document.createElement("video");
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
 
     const constraints = {
-      video: {
-        facingMode: "environment", // usa a câmera traseira do celular
-        width: 640,
-        height: 480,
-      },
+      video: { facingMode: "environment", width: 640, height: 480 },
     };
 
     navigator.mediaDevices
@@ -41,19 +33,16 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
         video.play();
         setTimeout(() => {
           context.drawImage(video, 0, 0, canvas.width, canvas.height);
-          const imgUrl = canvas.toDataURL("image/jpeg");
-          setFoto(imgUrl);
+          setFoto(canvas.toDataURL("image/jpeg"));
           stream.getTracks().forEach((track) => track.stop());
-        }, 1000); // Espera 1 segundo para capturar a foto
+        }, 1000);
       })
-      .catch((err) => {
-        console.error("Erro ao acessar a câmera: ", err);
-      });
+      .catch((err) => console.error("Erro ao acessar a câmera: ", err));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const novoPsicologo = {
+    aoCadastrarPsicologo({
       id: Date.now().toString(),
       nomeCompleto,
       crp,
@@ -62,10 +51,7 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
       endereco,
       foto,
       horarios: [],
-    };
-
-    aoCadastrarPsicologo(novoPsicologo); // Envia para o App.js para atualizar a lista de psicólogos
-
+    });
     setNomeCompleto("");
     setCrp("");
     setEspecialidades("");
@@ -75,7 +61,7 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
   };
 
   return (
-    <div>
+    <div className="cadastro-container">
       <h2>Cadastro de Psicólogo</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -87,6 +73,7 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
             required
           />
         </div>
+
         <div>
           <label>CRP:</label>
           <input
@@ -96,6 +83,7 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
             required
           />
         </div>
+
         <div>
           <label>Especialidades (separe por vírgula):</label>
           <input
@@ -105,6 +93,7 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
             required
           />
         </div>
+
         <div>
           <label>Biografia:</label>
           <textarea
@@ -113,6 +102,7 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
             required
           />
         </div>
+
         <div>
           <label>Endereço:</label>
           <input
@@ -122,18 +112,24 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
             required
           />
         </div>
+
         <div>
           <label>Foto de Perfil:</label>
           <input type="file" accept="image/*" onChange={handleFotoChange} />
-          <button type="button" onClick={handleFotoFromCamera}>
+          <button
+            type="button"
+            className="btn-camera"
+            onClick={handleFotoFromCamera}
+          >
             Usar Câmera
           </button>
           {foto && (
-            <div>
-              <img src={foto} alt="Foto do Psicólogo" width="100" />
+            <div className="foto-preview">
+              <img src={foto} alt="Foto do Psicólogo" />
             </div>
           )}
         </div>
+
         <button type="submit">Cadastrar Psicólogo</button>
       </form>
     </div>
