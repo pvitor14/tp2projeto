@@ -1,71 +1,53 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./PaginaInicial.css";
 
 const PaginaInicial = ({ psicologos, loading }) => {
   if (loading) {
-    return <h2>Carregando psicólogos...</h2>;
+    return (
+      <div className="container-inicial">
+        <h2>Carregando psicólogos...</h2>
+      </div>
+    );
   }
 
   return (
-    <>
-      <h2>Psicólogos disponíveis</h2>
-      {psicologos.length === 0 && <p>Nenhum psicólogo encontrado.</p>}
+    <div className="container-inicial">
+      <h2>Encontre seu Especialista</h2>
+
+      {psicologos.length === 0 && (
+        <p>Nenhum psicólogo encontrado no momento.</p>
+      )}
+
       <ul className="lista-psicologos">
         {psicologos.map((psic) => (
-          <li
-            key={psic.id}
-            className="item-psicologo"
-            style={{
-              border: "1px solid #ccc",
-              margin: "10px",
-              padding: "15px",
-              display: "flex",
-              gap: "20px",
-              alignItems: "center",
-            }}
-          >
-            {/* NOVO: Exibição da Foto */}
+          <li key={psic.id} className="card-psicologo">
             <img
-              src={psic.foto || "https://via.placeholder.com/80"}
+              src={psic.foto || "https://via.placeholder.com/150"}
               alt={`Foto de ${psic.nomeCompleto}`}
-              style={{
-                width: "80px",
-                height: "80px",
-                borderRadius: "50%",
-                objectFit: "cover",
-              }}
+              className="foto-perfil"
             />
 
-            <div style={{ flexGrow: 1 }}>
+            <div className="info-psicologo">
               <strong>{psic.nomeCompleto}</strong>
-              <p style={{ fontSize: "0.9em", color: "#555" }}>
-                {/* NOVO: Exibição das Especialidades */}
-                Especialidades:{" "}
+              <div className="texto-especialidades">
                 {(psic.especialidades || []).slice(0, 3).join(", ")}
-                {psic.especialidades.length > 3 ? "..." : ""}
-              </p>
+                {psic.especialidades && psic.especialidades.length > 3
+                  ? "..."
+                  : ""}
+              </div>
             </div>
 
-            <div>
-              <Link to={`/perfil/${psic.id}`}>
-                <button
-                  style={{
-                    backgroundColor: "#007bff",
-                    color: "white",
-                    padding: "8px 15px",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Ver Perfil
-                </button>
-              </Link>
-            </div>
+            <Link
+              to={`/perfil/${psic.id}`}
+              style={{ width: "100%", textAlign: "center" }}
+            >
+              <button className="btn-ver-perfil">Ver Perfil</button>
+            </Link>
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 

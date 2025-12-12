@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import PaginaInicial from "./PaginaInicial";
 import PaginaPerfil from "./PaginaPerfil";
@@ -7,77 +7,41 @@ import PaginaConsultas from "./PaginaConsultas";
 import CadastroPsicologo from "./CadastroPsicologo";
 import CadastroUsuario from "./CadastroUsuario";
 import Navegacao from "./componentes/Navegacao";
-import Chat from "./componentes/Chat"; 
+import Chat from "./componentes/Chat";
 
 import "./styles.css";
 
-const MOCK_BIOS = [
-  "Especialista em Terapia Cognitivo-Comportamental (TCC) com 5 anos de experiência, focada em transtornos de ansiedade e depressão em adultos.",
-  "Psicóloga clínica com abordagem humanista, auxiliando pacientes no processo de autoconhecimento e desenvolvimento pessoal.",
-  "Terapeuta de casais e famílias, utilizando métodos sistêmicos para melhorar a comunicação e resolver conflitos relacionais.",
-  "Especializada no atendimento de crianças e adolescentes, com foco em dificuldades de aprendizagem e comportamento.",
-  "Ampla experiência em tratamento de fobias e síndrome do pânico, utilizando técnicas de exposição e dessensibilização.",
-  "Foco em saúde mental no trabalho, auxiliando profissionais com gestão de estresse e prevenção de síndrome de burnout.",
-];
-
-const MOCK_ESPECIALIDADES = [
-  ["TCC", "Ansiedade", "Depressão"],
-  ["Humanista", "Autoconhecimento", "Jovens"],
-  ["Terapia de Casal", "Sistêmica", "Família"],
-  ["Infantil", "Adolescentes", "Aprendizagem"],
-  ["Fobias", "Pânico", "TCC"],
-  ["Estresse", "Burnout", "Carreira"],
-];
-
-const MOCK_HORARIOS = [
-  ["09:00", "10:00", "11:00", "14:00"],
-  ["08:00", "09:00", "13:00", "15:00"],
-  ["10:00", "11:00", "15:00", "16:00"],
-  ["14:00", "15:00", "16:00", "17:00"],
-  ["09:00", "11:00", "14:00", "16:00"],
-  ["08:00", "10:00", "13:00", "17:00"],
-];
-
 const App = () => {
   const [psicologos, setPsicologos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Consultas - Estados
   const [consultas, setConsultas] = useState(() => {
     const consultasSalvas = localStorage.getItem("consultas");
     return consultasSalvas ? JSON.parse(consultasSalvas) : {};
   });
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); // Hook para navegação
 
-  // Buscar psicólogos de exemplo
+  // API Fetch usando json - TP4
   useEffect(() => {
-    const buscarPsicologos = async () => {
+    const carregarDados = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          "https://randomuser.me/api/?results=6&seed=mindcare"
-        );
-        const data = await response.json();
+        const response = await fetch("/psicologos.json");
 
-        const psicologosMapeados = data.results.map((user, index) => ({
-          id: user.login.uuid,
-          nomeCompleto: `${user.name.first} ${user.name.last}`,
-          foto: user.picture.large,
-          endereco: `${user.location.street.number} ${user.location.street.name}, ${user.location.city}`,
-          crp: `06/${Math.floor(Math.random() * 90000) + 10000}`,
-          especialidades:
-            MOCK_ESPECIALIDADES[index % MOCK_ESPECIALIDADES.length],
-          biografia: MOCK_BIOS[index % MOCK_BIOS.length],
-          horarios: MOCK_HORARIOS[index % MOCK_HORARIOS.length],
-        }));
+        if (!response.ok) {
+          throw new Error("Erro ao carregar dados dos psicólogos");
+        }
 
-        setPsicologos(psicologosMapeados);
+        const dados = await response.json();
+        setPsicologos(dados);
       } catch (error) {
-        console.error("Erro ao buscar dados da API:", error);
+        console.error("Erro na requisição:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    buscarPsicologos();
+    carregarDados();
   }, []);
 
   useEffect(() => {
@@ -92,14 +56,18 @@ const App = () => {
       ...consultas,
       [idPsicologo]: [...consultasDoPsicologo, novaConsulta],
     });
+    alert("Consulta agendada com sucesso!");
   };
 
   const aoCadastrarPsicologo = (novoPsicologo) => {
+    // Adiciona o novo psicólogo na lista em memória
     setPsicologos([...psicologos, novoPsicologo]);
+    alert("Psicólogo cadastrado com sucesso!");
   };
 
   const aoCadastrarUsuario = (novoUsuario) => {
     console.log("Novo usuário cadastrado:", novoUsuario);
+    alert("Usuário cadastrado com sucesso!");
   };
 
   return (
@@ -138,11 +106,7 @@ const App = () => {
           path="/cadastro-usuario"
           element={<CadastroUsuario aoCadastrarUsuario={aoCadastrarUsuario} />}
         />
-        {}
-        <Route
-          path="/chat"
-          element={<Chat />} 
-        />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </div>
   );

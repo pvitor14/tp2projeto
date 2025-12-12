@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./CadastroPsicologo.css";
 
 const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
   const [nomeCompleto, setNomeCompleto] = useState("");
@@ -72,47 +73,49 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
   return (
     <div className="cadastro-container">
       <h2>Cadastro de Psicólogo</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nome Completo:</label>
-          <input
-            type="text"
-            value={nomeCompleto}
-            onChange={(e) => setNomeCompleto(e.target.value)}
-            required
-          />
-        </div>
+      <form onSubmit={handleSubmit} className="form-cadastro">
+        <div className="cadastro-inicial">
+          <div className="campo-grupo">
+            <label>Nome Completo:</label>
+            <input
+              type="text"
+              value={nomeCompleto}
+              onChange={(e) => setNomeCompleto(e.target.value)}
+              required
+            />
+          </div>
 
-        <div>
-          <label>CRP:</label>
-          <input
-            type="text"
-            value={crp}
-            onChange={(e) => setCrp(e.target.value)}
-            required
-          />
-        </div>
+          <div className="campo-grupo">
+            <label>CRP:</label>
+            <input
+              type="text"
+              value={crp}
+              onChange={(e) => setCrp(e.target.value)}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Especialidades (separe por vírgula):</label>
-          <input
-            type="text"
-            value={especialidades}
-            onChange={(e) => setEspecialidades(e.target.value)}
-            required
-          />
-        </div>
+          <div className="campo-grupo">
+            <label>Nome de Usuário:</label>
+            <input
+              type="text"
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Biografia:</label>
-          <textarea
-            value={biografia}
-            onChange={(e) => setBiografia(e.target.value)}
-            required
-          />
+          <div className="campo-grupo">
+            <label>Senha:</label>
+            <input
+              type="password"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+            />
+          </div>
         </div>
-
-        <div>
+        <div className="campo-grupo">
           <label>Endereço:</label>
           <input
             type="text"
@@ -122,30 +125,33 @@ const CadastroPsicologo = ({ aoCadastrarPsicologo }) => {
           />
         </div>
 
-        <div>
-          <label>Nome de Usuário:</label>
+        <div className="campo-grupo">
+          <label>Especialidades (separe por vírgula):</label>
           <input
             type="text"
-            value={usuario}
-            onChange={(e) => setUsuario(e.target.value)}
+            value={especialidades}
+            onChange={(e) => setEspecialidades(e.target.value)}
             required
           />
         </div>
 
-        <div>
-          <label>Senha:</label>
-          <input
-            type="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
+        <div className="campo-grupo">
+          <label>Biografia:</label>
+          <textarea
+            value={biografia}
+            onChange={(e) => setBiografia(e.target.value)}
             required
           />
         </div>
 
-        <div>
+        <div className="campo-grupo">
           <label>Foto de Perfil:</label>
           <input type="file" accept="image/*" onChange={handleFotoChange} />
-          <button type="button" onClick={handleFotoFromCamera}>
+          <button
+            type="button"
+            className="btn-camera"
+            onClick={handleFotoFromCamera}
+          >
             Usar Câmera
           </button>
           {foto && (

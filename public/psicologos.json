@@ -1,0 +1,62 @@
+[
+    {
+      "id": "psi-001",
+      "nomeCompleto": "Ana Maria Braga",
+      "foto": "https://randomuser.me/api/portraits/women/44.jpg",
+      "endereco": "Avenida Faria Lima, 100, São Paulo",
+      "crp": "06/12345",
+      "especialidades": ["TCC", "Ansiedade", "Depressão"],
+      "biografia": "Especialista em Terapia Cognitivo-Comportamental (TCC) com 5 anos de experiência, focada em transtornos de ansiedade e depressão em adultos.",
+      "horarios": ["09:00", "10:00", "11:00", "14:00"]
+    },
+    {
+      "id": "psi-002",
+      "nomeCompleto": "Antônio Felipe",
+      "foto": "https://randomuser.me/api/portraits/men/32.jpg",
+      "endereco": "Av. Paulista, 900, São Paulo",
+      "crp": "06/54321",
+      "especialidades": ["Humanista", "Autoconhecimento", "Jovens"],
+      "biografia": "Psicólogo clínico com abordagem humanista, auxiliando pacientes no processo de autoconhecimento e desenvolvimento pessoal.",
+      "horarios": ["08:00", "09:00", "13:00", "15:00"]
+    },
+    {
+      "id": "psi-003",
+      "nomeCompleto": "Daiane dos Santos",
+      "foto": "https://randomuser.me/api/portraits/women/68.jpg",
+      "endereco": "Rua Augusta, 500, São Paulo",
+      "crp": "06/67890",
+      "especialidades": ["Terapia de Casal", "Sistêmica", "Família"],
+      "biografia": "Terapeuta de casais e famílias, utilizando métodos sistêmicos para melhorar a comunicação e resolver conflitos relacionais.",
+      "horarios": ["10:00", "11:00", "15:00", "16:00"]
+    },
+    {
+      "id": "psi-004",
+      "nomeCompleto": "Paulo Rezende",
+      "foto": "https://randomuser.me/api/portraits/men/45.jpg",
+      "endereco": "Rua Oscar Freire, 100, São Paulo",
+      "crp": "06/11223",
+      "especialidades": ["Infantil", "Adolescentes", "Aprendizagem"],
+      "biografia": "Especializado no atendimento de crianças e adolescentes, com foco em dificuldades de aprendizagem e comportamento.",
+      "horarios": ["14:00", "15:00", "16:00", "17:00"]
+    },
+    {
+      "id": "psi-005",
+      "nomeCompleto": "Raíssa Leal",
+      "foto": "https://randomuser.me/api/portraits/women/90.jpg",
+      "endereco": "Av. Faria Lima, 2000, São Paulo",
+      "crp": "06/99887",
+      "especialidades": ["Fobias", "Pânico", "TCC"],
+      "biografia": "Ampla experiência em tratamento de fobias e síndrome do pânico, utilizando técnicas de exposição e dessensibilização.",
+      "horarios": ["09:00", "11:00", "14:00", "16:00"]
+    },
+    {
+      "id": "psi-006",
+      "nomeCompleto": "João Fonseca",
+      "foto": "https://randomuser.me/api/portraits/men/22.jpg",
+      "endereco": "Rua da Consolação, 300, São Paulo",
+      "crp": "06/77665",
+      "especialidades": ["Estresse", "Burnout", "Carreira"],
+      "biografia": "Foco em saúde mental no trabalho, auxiliando profissionais com gestão de estresse e prevenção de síndrome de burnout.",
+      "horarios": ["08:00", "10:00", "13:00", "17:00"]
+    }
+  ]
